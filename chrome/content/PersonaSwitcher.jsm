@@ -1,15 +1,15 @@
-//https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/XUL_Reference
+// https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/XUL_Reference
 // https://developer.mozilla.org/en/JavaScript_code_modules/Using_JavaScript_code_modules
 
 // no space between comment delimiters. really.
 /*global Components*/
 /*jslint vars: false*/
+"use strict";
 
 Components.utils.
     import("resource://gre/modules/LightweightThemeManager.jsm");
 
-"use strict";
-//If this value is changed, it needs to be changed in options.xul as well
+// If this value is changed, it needs to be changed in options.xul as well
 const MAX_PREVIEW_DELAY = 10000;
 const APPEARS_HIGHER_IN_LIST = -1;
 const SAME = 0;
@@ -133,11 +133,11 @@ PersonaSwitcher.firstTime = true;
 PersonaSwitcher.activeWindow = null;
 PersonaSwitcher.previewWhich = null;
 
-//Default theme set to an object with an id property equal to the hard coded 
-//default theme id value. Necessary for Icedove compatibility as Icedove's 
-//default theme id is not the same, and thus cannot be found using the same 
-//defaultThemeId. If Icedove's default theme id can be acquired, defaultTheme
-//can be set back to null and the correct id can be queried instead.
+// Default theme set to an object with an id property equal to the hard coded 
+// default theme id value. Necessary for Icedove compatibility as Icedove's 
+// default theme id is not the same, and thus cannot be found using the same 
+// defaultThemeId. If Icedove's default theme id can be acquired, defaultTheme
+// can be set back to null and the correct id can be queried instead.
 PersonaSwitcher.defaultTheme = {id:'{972ce4c6-7e08-4474-a285-3208198ce6fd}'};
 PersonaSwitcher.defaultThemeId = '{972ce4c6-7e08-4474-a285-3208198ce6fd}';
 PersonaSwitcher.defaultThemes = [];
@@ -373,7 +373,7 @@ PersonaSwitcher.rotate = function()
     }
     else
     {
-        //If a default theme is active, rotate to the first non-default theme
+        // If a default theme is active, rotate to the first non-default theme
         if(newIndex > PersonaSwitcher.currentThemes.length-1) {
             newIndex = 0;
         } else {
@@ -576,7 +576,7 @@ PersonaSwitcher.setCurrentTheme = function (doc, index)
         if(themes[index])
         {
             PersonaSwitcher.logger.log(themes[index]);
-            theme = themes[index];
+            var theme = themes[index];
             if ("Linux" === PersonaSwitcher.XULRuntime.OS) {
                 theme.removeAttribute('image');
             }
@@ -584,7 +584,7 @@ PersonaSwitcher.setCurrentTheme = function (doc, index)
             // This is a simple hack to ensure that the theme is redrawn in
             // certain versions of Thunderbird while being run on a Mac.
             //http://stackoverflow.com/questions/8840580/force-dom-redraw-refresh-on-chrome-mac
-            nextTheme = theme.nextSibling;
+            var nextTheme = theme.nextSibling;
             buttonMenu.removeChild(theme);
             buttonMenu.insertBefore(theme, nextTheme);
         }
@@ -665,9 +665,9 @@ PersonaSwitcher.extractDefaults = function() {
     var theme;
     // We do not want to iterate over the array backwards as that would
     // necessitate evaluation of a majority of the array and we want to make
-    // this as quick as possible. As such we account for the removal of items
+    // this as quick as possible. As such, we account for the removal of items
     // while iterating over the array by decrementing the index to compensate.
-    for(index = 0; index < PersonaSwitcher.currentThemes.length; index++) {
+    for(var index = 0; index < PersonaSwitcher.currentThemes.length; index++) {
         theme = PersonaSwitcher.currentThemes[index];
         if(APPEARS_HIGHER_IN_LIST === theme.name.localeCompare("Compact Dark")) {
             continue;
